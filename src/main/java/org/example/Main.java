@@ -29,12 +29,6 @@ public class Main {
         int filas = (int) Math.sqrt(cantidadDePasajeros);
         int columnas = (int) Math.ceil((double) cantidadDePasajeros / filas);
 
-        System.out.println("Cantidad de filas "+filas);
-        System.out.println("Cantidad de columnas "+columnas);
-
-        int tripulantesPorCabina = cantidadDePasajeros/cantidadDeCabinas;
-        int tripulantesPorCabinaRed = (int) Math.ceil(tripulantesPorCabina);
-        System.out.println("cantidad de tripulantes por cabina "+tripulantesPorCabinaRed);
 
         // Crear una matriz NxN de Pasajeros
 
@@ -59,6 +53,13 @@ public class Main {
             System.exit(0);
         }
 
+        // Simulación de Random Walk con Markov Chain
+        MarkovHealthSimulator simulator = new MarkovHealthSimulator();
+        System.out.println("Simulando Random Walk en salud de los pasajeros...");
+        for (int i = 0; i < 5; i++) { // Simulamos para los primeros 5 pasajeros
+            Pasajero pasajero = pasajeros[i / columnas][i % columnas];
+            simulator.simularSaludPasajero(pasajero);
+        }
         //Creacion de lista enlazada
         ListaEnlazada[] arregloHash = new ListaEnlazada[cantidadDeCabinas];
         for (int i = 0; i < arregloHash.length; i++) {
@@ -66,13 +67,17 @@ public class Main {
         }
 
         // Insertar pasajeros en la tabla hash, manejando colisiones con listas enlazadas
+        int contarPasajeros=0;
         for (int i = 0; i < pasajeros.length; i++) {
             for (int j = 0; j < pasajeros[i].length; j++) {
-                int indiceHash = tablaHash.calcularIndice(pasajeros[i][j], cantidadDeCabinas);
-                //System.out.println("Índice hash: " + indiceHash);
+                if (contarPasajeros<cantidadDePasajeros){
+                    int indiceHash = tablaHash.calcularIndice(pasajeros[i][j], cantidadDeCabinas);
+                    //System.out.println("Índice hash: " + indiceHash);
 
-                // Agregar pasajero a la lista enlazada en el índice calculado
-                arregloHash[indiceHash].addPrimero(pasajeros[i][j]);
+                    // Agregar pasajero a la lista enlazada en el índice calculado
+                    arregloHash[indiceHash].addPrimero(pasajeros[i][j]);
+                    contarPasajeros++;
+                }
             }
         }
 
@@ -98,7 +103,7 @@ public class Main {
         }
 
 
-        
+
 
 
         // Evaluar pasajeros

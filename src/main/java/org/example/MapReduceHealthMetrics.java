@@ -161,7 +161,7 @@ public class MapReduceHealthMetrics {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        String filePath = "src/main/java/org/example/utils/pasajeros.json"; // Ruta del archivo JSON con los datos
+        String filePath = "src/main/java/org/example/utils/pasajerosSalud.json"; // Ruta del archivo JSON con los datos
         JSONArray jsonData = readJsonFromFile(filePath);
         Map<String, Double> result = masterController(jsonData, 2, 1);  // Número de workers Map y Reduce
 
